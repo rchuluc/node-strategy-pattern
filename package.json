@@ -1,0 +1,25 @@
+{
+  "name": "node-strategy-pattern",
+  "version": "1.0.0",
+  "description": "NodeJS strategy design pattern",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rchuluc/node-strategy-pattern.git"
+  },
+  "keywords": [
+    "design pattern",
+    "strategy",
+    "GOF"
+  ],
+  "author": "rchuluc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rchuluc/node-strategy-pattern/issues"
+  },
+  "homepage": "https://github.com/rchuluc/node-strategy-pattern#readme"
+}
