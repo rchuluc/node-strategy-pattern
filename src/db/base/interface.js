@@ -19,7 +19,7 @@ class Interface {
   delete(id) {
     throw new StrategyError()
   }
-  isConnected(id) {
+  isConnected() {
     throw new StrategyError()
   }
 }

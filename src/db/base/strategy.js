@@ -18,8 +18,8 @@ class Strategy extends Interface {
   delete(id) {
     this._database.delete(id)
   }
-  isConnected(id) {
-    this._database.isConnected(id)
+  isConnected() {
+    this._database.isConnected()
   }
 }
 
