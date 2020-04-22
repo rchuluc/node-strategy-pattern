@@ -19,7 +19,10 @@ class Interface {
   delete(id) {
     throw new StrategyError()
   }
-  isConnected() {
+  async isConnected() {
+    throw new StrategyError()
+  }
+  drop() {
     throw new StrategyError()
   }
 }

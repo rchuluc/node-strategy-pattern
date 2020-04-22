@@ -7,19 +7,22 @@ class Strategy extends Interface {
   }
 
   create(data) {
-    this._database.create(data)
+    return this._database.create(data)
   }
   read(query) {
-    this._database.read(query)
+    return this._database.read(query)
   }
   update(id, data) {
-    this._database.update(id, data)
+    return this._database.update(id, data)
   }
   delete(id) {
-    this._database.delete(id)
+    return this._database.delete(id)
   }
-  isConnected() {
-    this._database.isConnected()
+  async isConnected() {
+    return this._database.isConnected()
+  }
+  drop() {
+    return this._database.drop()
   }
 }
 
