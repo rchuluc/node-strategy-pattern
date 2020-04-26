@@ -25,6 +25,7 @@
   "homepage": "https://github.com/rchuluc/node-strategy-pattern#readme",
   "dependencies": {
     "mocha": "^7.1.1",
+    "mongoose": "^5.9.10",
     "pg": "^8.0.2",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.6"

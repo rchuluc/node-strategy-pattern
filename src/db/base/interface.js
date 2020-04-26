@@ -7,6 +7,9 @@ class StrategyError extends Error {
 
 //interface
 class Interface {
+  async connect() {
+    throw new StrategyError()
+  }
   create(data) {
     throw new StrategyError()
   }

@@ -9,7 +9,7 @@ class Postgres extends Interface {
     this._dbNAME = 'heroes'
     this._dbUSER = 'admin'
     this._dbPASS = 'admin'
-    this._connect()
+    this.connect()
   }
 
   defineModel() {
@@ -34,7 +34,7 @@ class Postgres extends Interface {
     )
   }
 
-  _connect() {
+  connect() {
     this._db = new Sequelize(this._dbNAME, this._dbUSER, this._dbPASS, {
       dialect: 'postgres',
       host: 'localhost',
