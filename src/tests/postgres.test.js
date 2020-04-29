@@ -1,8 +1,9 @@
 const { equal, deepEqual, isAbove } = require('chai').assert
 const Strategy = require('../db/base/strategy')
 const Postgres = require('../db/postgres')
+const heroesModel = require('../db/postgres/model/heroes')
 
-const PostgresContext = new Strategy(new Postgres())
+let PostgresContext = {}
 
 const CREATE_MOCK = { name: 'Batman', power: 'Money' }
 const UPDATE_MOCK = { name: 'Aquaman', power: 'Talk to sea Creatures' }
@@ -10,7 +11,16 @@ const UPDATE_MOCK = { name: 'Aquaman', power: 'Talk to sea Creatures' }
 describe('Postgres SQL test suite', function () {
   this.timeout(Infinity)
   this.beforeAll(() => {
+    const connection = Postgres.connect({
+      user: 'admin',
+      pass: 'admin',
+      db: 'heroes',
+    })
+
+    PostgresContext = new Strategy(new Postgres(connection, heroesModel))
+
     PostgresContext.drop()
+
     PostgresContext.create(CREATE_MOCK)
     PostgresContext.create(UPDATE_MOCK)
   })
@@ -52,7 +62,6 @@ describe('Postgres SQL test suite', function () {
     const [record] = await PostgresContext.read()
 
     const result = await PostgresContext.delete(record.id)
-    console.log('delete', result)
     isAbove(result, 1)
   })
 

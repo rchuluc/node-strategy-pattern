@@ -1,14 +1,23 @@
-const { equal, deepEqual, isAbove, isArray } = require('chai').assert
+const { equal, deepEqual, isArray } = require('chai').assert
 const Strategy = require('../db/base/strategy')
-const MongoDB = require('../db/mongoDB')
+const MongoDB = require('../db/mongodb')
+const heroesModel = require('../db/mongodb/model/heroes')
 
-const MongoContext = new Strategy(new MongoDB())
+let MongoContext = {}
 
 const CREATE_MOCK = { name: 'Batman', power: 'Money' }
 let UPDATE_MOCK_ID
 
-describe.only('MongoDB test suite', function () {
+describe('MongoDB test suite', function () {
   this.beforeAll(async () => {
+    const connection = MongoDB.connect({
+      user: 'user',
+      pass: 'pass',
+      db: 'heroes',
+    })
+
+    MongoContext = new Strategy(new MongoDB(connection, heroesModel))
+
     await MongoContext.drop()
     const { _id } = await MongoContext.create(CREATE_MOCK)
     UPDATE_MOCK_ID = _id
