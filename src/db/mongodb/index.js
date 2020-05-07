@@ -18,7 +18,9 @@ class MongoDB extends Interface {
       }
     )
     const connection = Mongoose.connection
-    connection.once('open', () => console.log('MongoDB Connected'))
+    if (process.env.NODE_ENV !== 'test') {
+      connection.once('open', () => console.log('MongoDB Connected'))
+    }
     return connection
   }
 
