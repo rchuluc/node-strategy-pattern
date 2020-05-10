@@ -1,3 +1,4 @@
+require('../../config')
 const Interface = require('../base/interface')
 const Mongoose = require('mongoose')
 
@@ -8,12 +9,13 @@ class MongoDB extends Interface {
     this._model = model
   }
 
-  static connect({ user, pass, db }) {
+  static connect({ db }) {
     Mongoose.connect(
-      `mongodb://${user}:${pass}@localhost:27017/${db}`,
+      `${process.env.MONGO_URI}${db}`,
       { useNewUrlParser: true, useUnifiedTopology: true },
       (err) => {
         if (!err) return
+        console.log(`${uri}${db}`)
         console.log('MongoDB Connection error', err)
       }
     )

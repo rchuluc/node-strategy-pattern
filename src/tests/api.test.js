@@ -146,4 +146,23 @@ describe('API test suite', function () {
       equal(response.statusCode, 404)
     })
   })
+
+  describe('POST /login', function () {
+    const _route = {
+      method: 'POST',
+      url: '/login',
+    }
+
+    it('Must return token', async () => {
+      const response = await App.inject({
+        ..._route,
+        payload: {
+          username: 'rchuluc',
+          password: 'teste123',
+        },
+      })
+
+      equal(response.statusCode, 200)
+    })
+  })
 })

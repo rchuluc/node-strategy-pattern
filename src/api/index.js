@@ -1,9 +1,10 @@
 const Hapi = require('@hapi/hapi')
-const { Routes: HeroesRoutes, mapRoutes } = require('./routes/heroes')
+const { Auth, Heroes, mapRoutes } = require('./routes')
 const Strategy = require('../db/base/strategy')
 const MongoDB = require('../db/mongodb')
-const model = require('../db/mongodb/model/heroes')
+const heroesModel = require('../db/mongodb/model/heroes')
 const Postgres = require('../db/postgres')
+const usersModel = require('../db/postgres/model/users')
 
 const Swagger = require('hapi-swagger')
 const Inert = require('@hapi/inert')
@@ -22,11 +23,16 @@ const app = new Hapi.Server({
 
 const api = async () => {
   const mongoConnection = MongoDB.connect({
-    user: 'user',
-    pass: 'pass',
     db: 'heroes',
   })
-  const mongoContext = new Strategy(new MongoDB(mongoConnection, model))
+  const mongoContext = new Strategy(new MongoDB(mongoConnection, heroesModel))
+
+  const postgresConnection = Postgres.connect({
+    db: 'users',
+  })
+  const postgresContext = new Strategy(
+    new Postgres(postgresConnection, usersModel)
+  )
 
   await app.register([
     Inert,
@@ -34,9 +40,10 @@ const api = async () => {
     { plugin: Swagger, options: swaggerConfig },
   ])
 
-  app.route(
-    mapRoutes(new HeroesRoutes(mongoContext), HeroesRoutes.methodExtractor())
-  )
+  app.route([
+    ...mapRoutes(new Heroes(mongoContext), Heroes.methodExtractor()),
+    ...mapRoutes(new Auth(postgresContext), Auth.methodExtractor()),
+  ])
 
   await app.start().then(() => {
     if (process.env.NODE_ENV !== 'test') {

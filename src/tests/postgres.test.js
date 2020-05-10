@@ -12,8 +12,6 @@ describe('Postgres SQL test suite', function () {
   this.timeout(Infinity)
   this.beforeAll(() => {
     const connection = Postgres.connect({
-      user: 'admin',
-      pass: 'admin',
       db: 'heroes',
     })
 

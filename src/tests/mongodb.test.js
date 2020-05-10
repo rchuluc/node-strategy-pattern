@@ -11,11 +11,8 @@ let UPDATE_MOCK_ID
 describe('MongoDB test suite', function () {
   this.beforeAll(async () => {
     const connection = MongoDB.connect({
-      user: 'user',
-      pass: 'pass',
       db: 'heroes',
     })
-
     MongoContext = new Strategy(new MongoDB(connection, heroesModel))
 
     await MongoContext.drop()

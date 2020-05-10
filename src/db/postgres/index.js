@@ -1,3 +1,4 @@
+require('../../config')
 const Interface = require('../base/interface')
 const { Sequelize } = require('sequelize')
 
@@ -13,8 +14,8 @@ class Postgres extends Interface {
     this._model.sync()
   }
 
-  static connect({ user, pass, db }) {
-    return new Sequelize(db, user, pass, {
+  static connect({ db }) {
+    return new Sequelize(`${process.env.POSTGRES_URI}${db}`, {
       dialect: 'postgres',
       host: 'localhost',
       quoteIdentifiers: false,

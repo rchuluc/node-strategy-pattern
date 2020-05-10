@@ -7,7 +7,7 @@ const failAction = (request, h, err) => {
   return Boom.badRequest(details.message)
 }
 
-class Routes extends Route {
+class Heroes extends Route {
   constructor(db) {
     super()
     this.db = db
@@ -127,8 +127,4 @@ class Routes extends Route {
   }
 }
 
-const mapRoutes = (instance, methods) => {
-  return methods.map((method) => instance[method]())
-}
-
-module.exports = { Routes, mapRoutes }
+module.exports = Heroes
