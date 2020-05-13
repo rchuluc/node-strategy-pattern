@@ -9,6 +9,7 @@ const usersModel = require('../db/postgres/model/users')
 const Swagger = require('hapi-swagger')
 const Inert = require('@hapi/inert')
 const Vision = require('@hapi/vision')
+const JWT = require('hapi-auth-jwt2')
 
 const swaggerConfig = {
   info: {
@@ -35,10 +36,22 @@ const api = async () => {
   )
 
   await app.register([
+    JWT,
     Inert,
     Vision,
     { plugin: Swagger, options: swaggerConfig },
   ])
+
+  app.auth.strategy('jwt_token', 'jwt', {
+    key: process.env.JWT_KEY,
+    validate: (payload, h) => {
+      return {
+        isValid: true,
+      }
+    },
+  })
+
+  app.auth.default('jwt_token')
 
   app.route([
     ...mapRoutes(new Heroes(mongoContext), Heroes.methodExtractor()),

@@ -90,7 +90,6 @@ class Heroes extends Route {
           await this.db.update(_id, payload)
           return h.response({ message: 'Hero updated' })
         } catch (err) {
-          console.log(err)
           return Boom.badImplementation('Internal Error')
         }
       },
