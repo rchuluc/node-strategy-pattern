@@ -1,5 +1,5 @@
 const Hapi = require('@hapi/hapi')
-const { Auth, Heroes, mapRoutes } = require('./routes')
+const { Auth, Heroes, Coverage, mapRoutes } = require('./routes')
 const Strategy = require('../db/base/strategy')
 const MongoDB = require('../db/mongodb')
 const heroesModel = require('../db/mongodb/model/heroes')
@@ -56,12 +56,15 @@ const api = async () => {
   app.route([
     ...mapRoutes(new Heroes(mongoContext), Heroes.methodExtractor()),
     ...mapRoutes(new Auth(postgresContext), Auth.methodExtractor()),
+    ...mapRoutes(new Coverage(), Coverage.methodExtractor()),
   ])
 
   await app.start().then(() => {
-    if (process.env.NODE_ENV !== 'test') {
-      console.log(`Api running on port ${app.info.port}`)
-    }
+    console.log(
+      process.env.NODE_ENV !== 'test'
+        ? `Api running on port ${app.info.port}`
+        : ''
+    )
   })
 
   return app

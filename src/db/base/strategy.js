@@ -6,10 +6,6 @@ class Strategy extends Interface {
     this._database = database
   }
 
-  async connect() {
-    return this._database.connect()
-  }
-
   create(data) {
     return this._database.create(data)
   }
